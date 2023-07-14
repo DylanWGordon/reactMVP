@@ -1,0 +1,1 @@
+INSERT INTO portfolio(art_name, art_year, art_type, image_url) VALUES ('Test', 2023, 'test', 'https://fieryramencv.s3.us-west-2.amazonaws.com/shaggy.png')
