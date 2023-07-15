@@ -1,12 +1,16 @@
 import express from 'express'
-import postgres from 'postgres'
+import pg from 'pg'
+import AWS from 'aws-sdk'
 import pkg from 'pg'
 const { Pool } = pkg
 import cors from 'cors';
 import dotenv from 'dotenv';
+import multer from 'multer'
 
 const app = express();
 app.use(cors({ origin: '*' }))
+
+const upload = multer({dest:'uploads/'})
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -15,9 +19,15 @@ const URL = process.env.DATABASE_URL;
 const pool = new Pool({
 connectionString: URL
 })
+
+const s3 = new AWS.S3;
+const s3BucketName = 'fieryramencv';
+const s3KeyPrefix= 'cvUploads/'
+
+
 app.use(express.static("dist"))
 
-//get one
+//get all
 app.get("/", async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM portfolio ORDER BY art_year DESC');
@@ -28,7 +38,8 @@ app.get("/", async (req, res) => {
     }
 })
 
-//Get all
+
+//Get one
 app.get('/:id', async (req, res) => {
     const { id } = req.params;
     if (isNaN(Number.isInteger(id))) {
@@ -49,16 +60,41 @@ app.get('/:id', async (req, res) => {
 })
 
 //create one
-app.post('/', async (req, res) => {
-    try {
-        const { art_name, art_year, art_type, about, image_url } = req.body;
-        const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_type, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_type, about, image_url]);
-        res.json(result.rows[0]);
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal server error")
-    }
+
+app.post('/', upload.single('image'), async (req, res) => {
+        try {
+            const { art_name, art_year, art_type, about} = req.body;
+            const { path, originalName } = req.file
+            
+            const fileContent = await fetch(`file://${path}`)
+            .then((res) => res.buffer());
+            
+            const s3ObjectKey = s3KeyPrefix + originalName;
+
+            const s3UploadParams = {
+                Bucket: s3BucketName,
+                Key: s3ObjectKey,
+                Body: fileContent
+            }
+
+            await s3.upload(s3UokiadOarans).promise();
+
+            const s3ObjectUrl= `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`
+            
+            const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_type, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_type, about, s3ObjectUrl]);
+            res.status(200).json({
+                message: 'Image uploaded and portfolio item created',
+                id: result.rows[0].art_id
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Internal server error")
+        }
+    
 })
+
+// app.post('/', async (req, res) => {
+// })
 
 //Delete one;
 app.delete('/:id', async (req, res) => {

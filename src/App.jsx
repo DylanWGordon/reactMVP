@@ -25,8 +25,8 @@ function App() {
     <>
       <div id="left">
         <div id="icon" onClick={() => { setCurrentPage(''); }}>
-          {/* <img id='iconIMG' src='src/assets/fieryramenIcon2.png'></img> */}
-          <img id='iconIMG' src=''></img>
+          <img id='iconIMG' src='src/assets/fieryramenIcon2.png'></img>
+          {/* <img id='iconIMG' src=''></img> */}
         </div>
         <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
