@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get(`${URL}/`)
-      setArtData(res.data)
+      setArtData(res.data[0])
     }
     getData()
   }, [])
@@ -25,13 +25,14 @@ function App() {
     <>
       <div id="left">
         <div id="icon" onClick={() => { setCurrentPage(''); }}>
-          <img  id='iconIMG' src={artData.image_url}></img>
+          {/* <img id='iconIMG' src='src/assets/fieryramenIcon2.png'></img> */}
+          <img id='iconIMG' src=''></img>
         </div>
         <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
       <div id='right'>
       <Header />
-      <Body />
+      <Body currentPage={currentPage} />
       </div>
     </>
   )
