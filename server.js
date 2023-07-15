@@ -21,7 +21,7 @@ app.use(express.static("src"))
 //get one
 app.get("/", async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM portfolio ORDER BY year DESC');
+        const result = await pool.query('SELECT * FROM portfolio ORDER BY art_year DESC');
         res.json(result.rows)
     } catch (err) {
         console.error(err)
