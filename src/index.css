@@ -27,6 +27,17 @@ body {
   background-color: bisque;
   height:30dvh;
   width:15dvw;
+  display:flex;
+  place-content:center;
+  place-items:center;
+}
+
+#iconIMG{
+  height:90%;
+  max-width:90%;
+  aspect-ratio:initial;
+  border-radius: 50%;
+  display:flex;
 }
 #navbar{
   width:15dvw;
@@ -54,5 +65,14 @@ body {
   background-color: rgb(208, 176, 238);
 }
 
+#navList{
+  list-style-type: none;
+}
 
+.navListItem{
+  gap:1.3rem;
+}
 
+.navListItem:hover {
+  cursor: pointer;
+}

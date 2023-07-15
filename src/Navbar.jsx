@@ -1,9 +1,11 @@
-// import { useEffect } from 'react';
+import NavbarItems from './NavbarItems.jsx'
 
-const Navbar = () => {
+const Navbar = ({ currentPage, setCurrentPage }) => {
   
 
-    return <div id='navbar'>navBar</div>
+    return <div id='navbar'>
+        <NavbarItems currentPage={currentPage} setCurrentPage={setCurrentPage} />
+    </div>
 }
     
 export default Navbar

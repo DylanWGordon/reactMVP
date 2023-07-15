@@ -16,7 +16,7 @@ const pool = new Pool({
 connectionString: URL
 })
 app.use(express.json())
-app.use(express.static("src"))
+app.use(express.static("dist"))
 
 //get one
 app.get("/", async (req, res) => {
