@@ -4,6 +4,7 @@ CREATE TABLE portfolio(
     art_name VARCHAR,
     art_year INTEGER,
     art_type VARCHAR,
+    about VARCHAR,
     image_url VARCHAR
 )
 
