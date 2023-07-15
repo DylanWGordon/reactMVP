@@ -20,7 +20,7 @@ function App() {
   return (
     <>
       <div id="left">
-        <div id="icon"></div>
+        <div id="icon">icon</div>
       <Navbar />
       </div>
       <div id='right'>

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npx vite build",
+    "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -27,7 +27,8 @@
     "eslint": "^8.44.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.1"
+    "eslint-plugin-react-refresh": "^0.4.1",
+    "vite": "^4.4.0"
   },
   "description": "First attempt at designing a CV. For the sake of the project's MVP requirements, It will first be built to show off the editor side of the website that the owner will have access to.",
   "main": "vite.config.js",

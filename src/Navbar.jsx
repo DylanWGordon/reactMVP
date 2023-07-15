@@ -3,7 +3,7 @@
 const Navbar = () => {
   
 
-    return <div id='navbar'> TestItem</div>
+    return <div id='navbar'>navBar</div>
 }
     
 export default Navbar
