@@ -1,4 +1,3 @@
-const URL = 'https://kane-cv-web-service.onrender.com/'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar.jsx'
@@ -10,6 +9,7 @@ import IconItems from './IconItems.jsx'
 
 
 function App() {
+  const URL = 'https://kane-cv-web-service.onrender.com'
   const [artData, setArtData] = useState([])
   const [currentPage, setCurrentPage] = useState('')
 
@@ -22,7 +22,7 @@ function App() {
     }
     getData()
   }, [])
-  console.log(artData[0])
+  console.log(artData)
 
 
 
@@ -38,7 +38,7 @@ function App() {
       </div>
       <div id='right'>
         <Header />
-        <Body currentPage={currentPage} />
+        <Body currentPage={currentPage} artData={artData} />
       </div>
     </>
   )

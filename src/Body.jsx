@@ -1,22 +1,32 @@
+import useState from 'react'
 import Contact from './Contact.jsx'
-import Home from './Home.jsx';
+import Portfolio from './Portfolio.jsx';
 
-const Body = ({ currentPage }) => {
-    
+const Body = ({ currentPage, artData }) => {
+
+    //get 1 functionality up next
+
+
     if (currentPage === 'Contact') {
-        return <div id='mainBody'>
-            <div id='bodyBody'>
-            <Contact currentPage={currentPage} />
+        return (
+            <div id='mainBody'>
+            <div id='bodyBody' className='rounded'>
+                <Contact currentPage={currentPage} />
             </div>
-        </div>
-    } else {
-        return <div id='mainBody'>
-            <div id='bodyBody'>
-                <Home />
             </div>
-        </div>
+        )
+    } else if (currentPage === 'Portfolio') {
+        return (
+            <div id='mainBody'>
+            <div id='bodyBody' className="rounded">
+                <div className='thumbs'>
+                    <Portfolio artData={artData} />
+                </div>
+            </div>
+            </div>
+        )
     }
-
 }
+
 
 export default Body

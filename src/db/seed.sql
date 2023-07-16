@@ -1,1 +1,5 @@
-INSERT INTO portfolio(art_name, art_year, art_type, image_url, about) VALUES ('Test', 2023, 'test', 'https://fieryramencv.s3.us-west-2.amazonaws.com/shaggy.png', 'this is a test')
+INSERT INTO portfolio(art_name, art_year, art_type, image_url, about) VALUES ('Test', 2023, 'test', 'https://fieryramencv.s3.us-west-2.amazonaws.com/shaggy.png', 'this is a test');
+INSERT INTO portfolio(art_name, art_year, art_type, image_url, about) VALUES ('Yen', 2023, 'OC', 'https://fieryramencv.s3.us-west-2.amazonaws.com/cvUploads/Character_Yen_2023.png', 'Yen is a dope guy');
+INSERT INTO portfolio(art_name, art_year, art_type, image_url, about) VALUES ('Absynthia', 2022, 'OC', 'https://fieryramencv.s3.us-west-2.amazonaws.com/cvUploads/Character_Absynthia_2022.png', 'Absynthia!!!!!!!');
+INSERT INTO portfolio(art_name, art_year, art_type, image_url, about) VALUES ('Friend', 2021, 'OC', 'https://fieryramencv.s3.us-west-2.amazonaws.com/cvUploads/Character_Friend_2021_1.png', 'Critters of all types seem comfortable around Friend.');
+INSERT INTO portfolio(art_name, art_year, art_type, image_url, about) VALUES ('Friend', 2021, 'Concept', 'https://fieryramencv.s3.us-west-2.amazonaws.com/cvUploads/Character_Friend_2021_2.png', 'A dynamic panel for our friend, Friend!');
