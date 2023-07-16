@@ -9,7 +9,7 @@ import IconItems from './IconItems.jsx'
 
 
 function App() {
-  const URL = '../server.js/'
+  const URL = '../server.js'
   const [artData, setArtData] = useState([])
   const [currentPage, setCurrentPage] = useState('')
 
