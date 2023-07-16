@@ -3,7 +3,7 @@ import CenterRowItems from './CenterRowItems'
 import RightRowItems from './RightRowItems'
 
 
-const Portfolio = ({ artData }) => {
+const Portfolio = ({ artData, setCurrentPage, setCurrentId }) => {
     let leftArr = [];
     let centerArr = [];
     let rightArr = [];
@@ -12,34 +12,29 @@ const Portfolio = ({ artData }) => {
         j = i + 1;
         if (j % 3 === 0) {
             rightArr.push(artData[i])
-            console.log('3')
         } else if ((j + 1) % 3 === 0) {
-            centerArr.push(artData[i])
-            console.log('2')
+            centerArr.push(artData[i])      
         } else if ((j + 2) % 3 === 0) {
-            leftArr.push(artData[i])
-            console.log('1')
+            leftArr.push(artData[i])   
         }
-            console.log(i)
+          
     }
-    // if (newData.length < 9) {
-    //     newData.push(...[...leftArr, ...centerArr, ...rightArr])
-    //     leftArr = [];
-    //     centerArr = [];
-    //     rightArr = [];
+   
+   
+
         
     
 
     return (
         <>
         <div className='rowDiv' id='leftRow'>
-                <LeftRowItems leftArr={leftArr} />
+                <LeftRowItems setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} leftArr={leftArr} />
         </div>
         <div className='rowDiv' id='centerRow'>
-                <CenterRowItems centerArr={centerArr} />
+                <CenterRowItems setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} centerArr={centerArr} />
         </div>
         <div className='rowDiv' id='rightRow'>
-                <RightRowItems rightArr={rightArr} />
+                <RightRowItems setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} rightArr={rightArr} />
         </div>
     </>
     )

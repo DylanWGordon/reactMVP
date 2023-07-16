@@ -1,10 +1,13 @@
-import useState from 'react'
+import { useState } from 'react'
 import Contact from './Contact.jsx'
 import Portfolio from './Portfolio.jsx';
+import Single from './Single.jsx'
+import Filters from './Filters.jsx'
 
-const Body = ({ currentPage, artData }) => {
-
+const Body = ({ currentPage, setCurrentPage, artData }) => {
     //get 1 functionality up next
+    const [currentId, setCurrentId] = useState(0)
+
 
 
     if (currentPage === 'Contact') {
@@ -15,12 +18,23 @@ const Body = ({ currentPage, artData }) => {
             </div>
             </div>
         )
+    } else if (currentPage === 'single') {
+        return (
+            <div id='mainBody'>
+                <div id='bodyBody' className="rounded noscroll" >
+                    <div className='thumbs'>
+                        <Single artData={artData} setCurrentPage={setCurrentPage} currentId={currentId} setCurrentId={setCurrentId} />
+                    </div>
+                </div>
+            </div>
+        )
     } else if (currentPage === 'Portfolio') {
         return (
             <div id='mainBody'>
-            <div id='bodyBody' className="rounded">
+                <div id='bodyBody' className="rounded">
+                <Filters />
                 <div className='thumbs'>
-                    <Portfolio artData={artData} />
+                        <Portfolio artData={artData} setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} />
                 </div>
             </div>
             </div>

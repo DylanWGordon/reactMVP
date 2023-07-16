@@ -141,6 +141,35 @@ justify-content:space-around;
   margin:.2rem;
 }
 
+#singleDiv{
+  height:calc(86dvh - 10px);
+  position:absolute;
+  
+}
+
+#singleImg{
+  aspect-ratio: initial;
+  height:80%;
+  position:sticky;
+}
+
+#singleInfo{
+  margin:0;
+  height:14%;
+  background-color:azure;
+  padding:.9rem;
+  text-align: center;
+  line-height: 13px;
+}
+
+#singleHeader{
+  margin:0;
+}
+.singleYear{
+  margin-top:0;
+  font-size:x-small
+}
+
 #test{
   background-color:paleturquoise;
   height:20%;
@@ -156,7 +185,11 @@ justify-content:space-around;
 }
 
 .navListItem:hover {
-  
+  font-size: larger;
+}
+
+.noScroll{
+ overflow-y: hidden;
 }
 
 .rounded{
