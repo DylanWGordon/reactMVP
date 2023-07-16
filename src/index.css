@@ -33,12 +33,13 @@ body {
 }
 
 #iconIMG{
-  background-color: bisque;
+  background-color: aliceblue;
   height:90%;
-  max-width:90%;
+  max-width:80%;
   aspect-ratio:initial;
-  border-radius: 30%;
+  border-radius: 40%;
   display:flex;
+  /* background-color: rgb(184, 208, 252); */
 }
 #navbar{
   width:15dvw;
@@ -54,7 +55,7 @@ body {
 place-content:center;
 background-color:aliceblue;
 margin:1rem;
-/* margin-top:0; */
+border-radius:5px;;
 width:100%;
 
 
@@ -75,10 +76,9 @@ width:100%;
 }
 
 #headerBody{
-background-color:rgb(253, 236, 230);
-margin:1dvh;
-margin-top:0;
-height:7dvh;
+  background-color: rgb(228, 207, 245);
+margin:0;
+height:8dvh;
 }
 
 #mainBody{
@@ -92,8 +92,10 @@ height:7dvh;
 #bodyBody{
   background-color:rgb(251, 248, 245);
   margin:1rem;
-  width:calc(100% - 1rem);
-  height:calc(92dvh - 1rem)
+  width:calc(100% - calc(1rem - 1px));
+  height:calc(92dvh - 1rem);
+  border-radius:5px;
+  outline:1px solid rgba(1, 4, 8, .2)
 }
 
 #test{

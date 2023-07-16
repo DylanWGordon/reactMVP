@@ -4,29 +4,34 @@ import axios from 'axios'
 import Navbar from './Navbar.jsx'
 import Header from './Header.jsx'
 import Body from './Body.jsx'
+import IconItems from './IconItems.jsx'
 
 
 
 function App() {
   const [artData, setArtData] = useState([])
   const [currentPage, setCurrentPage] = useState('')
+  
 
 
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get(`${URL}/`)
-      setArtData(res.data[0])
+      setArtData(res.data)
     }
     getData()
   }, [])
-  console.log(artData)
+  console.log(artData())
+
   
+  
+
+
   return (
     <>
       <div id="left">
         <div id="icon" onClick={() => { setCurrentPage(''); }}>
-          <img id='iconIMG' src='src/assets/fieryramenIcon2.png'></img>
-          {/* <img id='iconIMG' src=''></img> */}
+          <IconItems />
         </div>
         <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
