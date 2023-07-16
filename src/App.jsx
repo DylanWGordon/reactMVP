@@ -1,4 +1,5 @@
-const URL = 'https://kane-cv-web-service.onrender.com'
+// const URL = 'https://kane-cv-web-service.onrender.com'
+import dotenv from 'dotenv'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar.jsx'
@@ -6,6 +7,8 @@ import Header from './Header.jsx'
 import Body from './Body.jsx'
 import IconItems from './IconItems.jsx'
 
+dotenv.config()
+const URL = process.env.DATABASE_URL;
 
 
 function App() {
