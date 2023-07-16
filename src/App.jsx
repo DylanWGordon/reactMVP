@@ -17,8 +17,12 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get(`${URL}/`)
-      setArtData(res.data)
+      // const res = await axios.get(`${URL}/`)
+      // setArtData(res.data)
+      const res = await fetch(`${URL}/`);
+      const response = await (res.json());
+      setArtData(response)
+
     }
     getData()
   }, [])
