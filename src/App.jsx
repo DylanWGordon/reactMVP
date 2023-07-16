@@ -21,7 +21,7 @@ function App() {
     }
     getData()
   }, [])
-  console.log(artData())
+  console.log(artData[0])
 
   
   
