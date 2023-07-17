@@ -29,7 +29,7 @@ const s3KeyPrefix= 'cvUploads/'
 app.use(express.static("public"))
 
 //get all
-app.get("/", async (req, res) => {
+app.get(`${URL}/`, async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM portfolio ORDER BY art_year DESC');
         res.json(result.rows)
@@ -42,7 +42,7 @@ app.get("/", async (req, res) => {
 
 
 //Get one
-app.get('/:id', async (req, res) => {
+app.get(`${URL}/id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(Number.isInteger(id))) {
         req.status(400).send("Bad Request")
@@ -95,7 +95,8 @@ app.get('/:id', async (req, res) => {
     
 // })
 
-app.post('/', upload.single('image'), async (req, res) => {
+app.post(`${URL}/`, upload.single('image'), async (req, res) => {
+    console.log(req)
     try {
         const { art_name, art_year, art_tags, about } = req.body;
         const { path, originalName } = req.file;
@@ -148,13 +149,13 @@ app.post('/', upload.single('image'), async (req, res) => {
 // })
 
 //Delete one;
-app.delete('/:id', async (req, res) => {
+app.delete(`${URL}/id`, async (req, res) => {
     const { id } = req.params;
-    if (isNaN(Number.isInteger(id))) {
+    if (isNaN(Number.parseInt(id))) {
         req.status(400).send("Bad Request")
     } else {
             try {
-            const result = await pool.query('DELETE FROM portfolio WHERE id = $1 RETURNING *', [id]);
+            const result = await pool.query('DELETE FROM portfolio WHERE id = $1 RETURNING *', [parseIntId]);
             if (result.rowCount === 0) {
                 res.status(404).send('Not Found')
             } else { }
@@ -167,9 +168,9 @@ app.delete('/:id', async (req, res) => {
 })
 
 //update one
-app.patch('/:id', async (req, res) => {
+app.patch(`${URL}/id`, async (req, res) => {
     const { id } = req.params;
-    if (isNaN(Number.isInteger(id))) {
+    if (isNaN(parseInt(id))) {
         req.status(400).send("Bad Request")
     } else {
         const patchData = req.body

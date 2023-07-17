@@ -10,7 +10,7 @@ import IconItems from './IconItems.jsx'
 
 function App() {
   // const URL = '/server.js/'
-  const URL = 'https://kane-cv-web-service.onrender.com/'
+  const URL = '../server.js/'
   const [artData, setArtData] = useState([])
   const [currentPage, setCurrentPage] = useState('')
 

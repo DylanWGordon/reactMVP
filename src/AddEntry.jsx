@@ -59,7 +59,7 @@ console.log(imgFile)
             for (const key in inputData) {
                 formData.append(key, inputData[key])
             }
-            const response = await axios.post('/', formData)
+            const response = await axios.post('../server.js/', formData)
             console.log(response.data)
         } catch(err) {
             console.error(err)
@@ -89,7 +89,7 @@ console.log(imgFile)
 
                          
                             <label for="uploadImage">Image:</label>
-            <input type="file" id="uploadImage" name="uploadImage" accept=".png, .gif, .jpg, .jpeg" onChange={imgHandler} required></input>
+            <input type="file" id="uploadImage" name="image" accept=".png, .gif, .jpg, .jpeg" onChange={imgHandler} required></input>
 
               
                                 <input type="button" value="Submit" onClick={handleSubmit}></input>
