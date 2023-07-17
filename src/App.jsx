@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get(${URL})
+      const res = await axios.get(URL)
       setArtData(res.data)
 
     }
