@@ -21,6 +21,14 @@ const pool = new Pool({
     connectionString: URL
 })
 
+AWS.config.update({
+    region: 'us-west-2',
+    credentials: new AWS.Credentials({
+        accessKeyId: 'AKIASETWN62PNCJC245T',
+        secretAccessKey: 'fqTZfRDIDbUh2wzbirceNc+7fty00eHXyjczBaIEy',
+    }),
+});
+
 const s3 = new AWS.S3;
 const s3BucketName = 'fieryramencv';
 const s3KeyPrefix = 'cvUploads/'
