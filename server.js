@@ -34,6 +34,7 @@ app.get("/", async (req, res) => {
         const result = await pool.query('SELECT * FROM portfolio ORDER BY art_year DESC');
         res.json(result.rows)
     } catch (err) {
+        console.log(req)
         console.error(err)
         res.status(500).message("Internal Server Error")
     }
