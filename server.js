@@ -10,23 +10,23 @@ import multer from 'multer'
 const app = express();
 app.use(cors({ origin: '*' }))
 
-const upload = multer({dest:'uploads/'})
+const upload = multer({ dest: 'uploads/' })
 
 dotenv.config();
 const PORT = process.env.PORT;
 const URL = process.env.DATABASE_URL;
 
 const pool = new Pool({
-connectionString: URL
+    connectionString: URL
 })
 
 const s3 = new AWS.S3;
 const s3BucketName = 'fieryramencv';
-const s3KeyPrefix= 'cvUploads/'
+const s3KeyPrefix = 'cvUploads/'
 
 
-app.use(express.static("dist"))
-// app.use(express.static("public"))
+// app.use(express.static("dist"))
+app.use(express.static("public"))
 
 //get all
 app.get(`${URL}/`, async (req, res) => {
@@ -45,7 +45,7 @@ app.get(`${URL}/`, async (req, res) => {
 app.get(`${URL}/id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(Number.isInteger(id))) {
-        req.status(400).send("Bad Request")
+        res.status(400).send("Bad Request")
     } else {
         try {
             const result = await pool.query('SELECT art_name, art_year, art_tags, about, image_url FROM portfolio WHERE art_id = $1', [parseInt(id)]);
@@ -67,10 +67,10 @@ app.get(`${URL}/id`, async (req, res) => {
 //         try {
 //             const { art_name, art_year, art_tags, about} = req.body;
 //             const { path, originalName } = req.file
-            
+
 //             const fileContent = await fetch(`file://${path}`)
 //             .then((res) => res.buffer());
-            
+
 //             const s3ObjectKey = s3KeyPrefix + originalName;
 
 //             const s3UploadParams = {
@@ -82,7 +82,7 @@ app.get(`${URL}/id`, async (req, res) => {
 //             await s3.upload(s3UploadParams).promise();
 
 //             const s3ObjectUrl= `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`
-            
+
 //             const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_tags, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_tags, about, s3ObjectUrl]);
 //             res.status(200).json({
 //                 message: 'Image uploaded and portfolio item created',
@@ -92,7 +92,7 @@ app.get(`${URL}/id`, async (req, res) => {
 //             console.error(err);
 //             res.status(500).send("Internal server error")
 //         }
-    
+
 // })
 
 app.post(`${URL}/`, upload.single('image'), async (req, res) => {
@@ -152,9 +152,9 @@ app.post(`${URL}/`, upload.single('image'), async (req, res) => {
 app.delete(`${URL}/id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(Number.parseInt(id))) {
-        req.status(400).send("Bad Request")
+        res.status(400).send("Bad Request")
     } else {
-            try {
+        try {
             const result = await pool.query('DELETE FROM portfolio WHERE id = $1 RETURNING *', [parseIntId]);
             if (result.rowCount === 0) {
                 res.status(404).send('Not Found')
@@ -171,13 +171,13 @@ app.delete(`${URL}/id`, async (req, res) => {
 app.patch(`${URL}/id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(parseInt(id))) {
-        req.status(400).send("Bad Request")
+        res.status(400).send("Bad Request")
     } else {
         const patchData = req.body
         const keyList = Object.keys(patchData);
         let sqlString = 'UPDATE portfolio SET '
         let inputs = ''
-        for (let i = 0; i < keyList.length; i++){
+        for (let i = 0; i < keyList.length; i++) {
             if (patchData[keyList[i]] === undefined || patchData[keyList[i]] === '') {
                 res.status(400).send('Bad request');
                 return;
@@ -196,7 +196,7 @@ app.patch(`${URL}/id`, async (req, res) => {
                 inputs += keyList[i] + ' = ' + patchData[keyList[i]]
             }
         } sqlString += inputs;
-        sqlString += ' WHERE id = ' + '\'' + id + '\' RETURNING *';
+        sqlString += ` WHERE id = ` + `\`` + id + `\` RETURNING *`;
         try {
             const result = await pool.query(sqlString)
             if (result.rowCount === 0) {
@@ -204,11 +204,11 @@ app.patch(`${URL}/id`, async (req, res) => {
             } else {
                 res.json(result.rows[0])
             }
-    } catch (err) {
-        console.error(err)
-        res.status(500).send('Internal Server Error')
+        } catch (err) {
+            console.error(err)
+            res.status(500).send('Internal Server Error')
+        }
     }
-}
 })
 
 
