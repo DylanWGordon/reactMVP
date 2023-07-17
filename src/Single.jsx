@@ -14,7 +14,7 @@ const Single = ({ artData, currentId, setCurrentId, setCurrentPage }) => {
     let piece
     const currentImage = async () => {
         let id= parseInt(currentId)
-        let result = await axios.get(`https://kane-cv-web-service.onrender.com/id`)
+        let result = await axios.get(`https://kane-cv-web-service.onrender.com/${id}`)
         piece = result.json
         console.log(piece)
     } 

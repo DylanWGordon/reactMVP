@@ -51,7 +51,7 @@ app.get(`/`, async (req, res) => {
 
 
 //Get one
-app.get(`/id`, async (req, res) => {
+app.get(`/:id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(Number.parseInt(id))) {
         res.status(400).send("Bad Request")
@@ -162,7 +162,7 @@ app.post(`/`, upload.single('image'), async (req, res) => {
 // })
 
 //Delete one;
-app.delete(`/id`, async (req, res) => {
+app.delete(`/:id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(Number.parseInt(id))) {
         res.status(400).send("Bad Request")
@@ -181,7 +181,7 @@ app.delete(`/id`, async (req, res) => {
 })
 
 //update one
-app.patch(`/id`, async (req, res) => {
+app.patch(`/:id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(parseInt(id))) {
         res.status(400).send("Bad Request")
