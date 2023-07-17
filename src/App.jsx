@@ -20,8 +20,8 @@ function App() {
       // const res = await axios.get(`${URL}/`)
       // setArtData(res.data)
       const res = await fetch(`${URL}/`);
-      const response = await fetch(res);
-      setArtData(response.json())
+      const response = await res.json();
+      setArtData(response)
 
     }
     getData()
