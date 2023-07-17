@@ -59,7 +59,7 @@ console.log(imgFile)
             for (const key in inputData) {
                 formData.append(key, inputData[key])
             }
-            const response = await axios.post('https://kane-cv-web-service.onrender.com', formData)
+            const response = await axios.post('https://kane-cv-web-service.onrender.com/', formData)
             console.log(response.data)
         } catch(err) {
             console.error(err)

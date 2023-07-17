@@ -96,7 +96,7 @@ app.get(`/id`, async (req, res) => {
 // })
 
 app.post(`/`, upload.single('image'), async (req, res) => {
-    console.log(req)
+    console.log(upload.single('image'))
     try {
         const { art_name, art_year, art_tags, about } = req.body;
         const { path, originalName } = req.file;
