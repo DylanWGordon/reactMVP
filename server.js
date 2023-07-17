@@ -6,7 +6,7 @@ const { Pool } = pkg
 import cors from 'cors';
 import dotenv from 'dotenv';
 import multer from 'multer'
-import axios from 'axios'
+import fs from 'fs'
 
 const app = express();
 app.use(cors({ origin: '*' }))
@@ -64,89 +64,91 @@ app.get(`/id`, async (req, res) => {
 
 //create one
 
-// app.post('/', upload.single('image'), async (req, res) => {
-//         try {
-//             const { art_name, art_year, art_tags, about} = req.body;
-//             const { path, originalName } = req.file
-
-//             const fileContent = await fetch(`file://${path}`)
-//             .then((res) => res.buffer());
-
-//             const s3ObjectKey = s3KeyPrefix + originalName;
-
-//             const s3UploadParams = {
-//                 Bucket: s3BucketName,
-//                 Key: s3ObjectKey,
-//                 Body: fileContent
-//             }
-
-//             await s3.upload(s3UploadParams).promise();
-
-//             const s3ObjectUrl= `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`
-
-//             const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_tags, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_tags, about, s3ObjectUrl]);
-//             res.status(200).json({
-//                 message: 'Image uploaded and portfolio item created',
-//                 id: result.rows[0].art_id
-//             });
-//         } catch (err) {
-//             console.error(err);
-//             res.status(500).send("Internal server error")
-//         }
-
-// })
-
-app.post(`/`, upload.single('image'), async (req, res) => {
-    console.log(upload.single('image'))
+app.post(`${URL}/`, upload.single('image'), async (req, res) => {
+    console.log(req);
     try {
         const { art_name, art_year, art_tags, about } = req.body;
-        const { path, originalName } = req.file;
+        const { path, originalname } = req.file;
 
-        // Fetch the file content
-        let fileContent
-        try {
-            const response = await axios.get(`file://${path}`, {
-                responseType: 'arraybuffer'
-            })
-            fileContent = response.data
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send('Error occurred while fetching file content');
-        }
+        // Read the file content from the local filesystem
+        const fileContent = fs.readFileSync(path);
 
         // Upload to S3
-        const s3ObjectKey = s3KeyPrefix + originalName;
+        const s3ObjectKey = s3KeyPrefix + originalname;
         const s3UploadParams = {
             Bucket: s3BucketName,
             Key: s3ObjectKey,
             Body: fileContent,
         };
 
-        try {
-            await s3.upload(s3UploadParams).promise();
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send('Error occurred while uploading to S3');
-        }
+        await s3.upload(s3UploadParams).promise();
 
         // Insert into database
         const s3ObjectUrl = `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`;
 
-        try {
-            const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_tags, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_tags, about, s3ObjectUrl]);
-            res.status(200).json({
-                message: 'Image uploaded and portfolio item created',
-                id: result.rows[0].art_id,
-            });
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send('Error occurred while inserting into the database');
-        }
+        const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_tags, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_tags, about, s3ObjectUrl]);
+        res.status(200).json({
+            message: 'Image uploaded and portfolio item created',
+            id: result.rows[0].art_id,
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal server error');
     }
 });
+
+
+// app.post(`/`, upload.single('image'), async (req, res) => {
+//     console.log(upload.single('image'))
+//     try {
+//         const { art_name, art_year, art_tags, about } = req.body;
+//         const { path, originalName } = req.file;
+
+//         // Fetch the file content
+//         let fileContent
+//         try {
+//             const response = await axios.get(`file://${path}`, {
+//                 responseType: 'arraybuffer'
+//             })
+//             fileContent = response.data
+//         } catch (error) {
+//             console.error(error);
+//             return res.status(500).send('Error occurred while fetching file content');
+//         }
+
+//         // Upload to S3
+//         const s3ObjectKey = s3KeyPrefix + originalName;
+//         const s3UploadParams = {
+//             Bucket: s3BucketName,
+//             Key: s3ObjectKey,
+//             Body: fileContent,
+//         };
+
+//         try {
+//             await s3.upload(s3UploadParams).promise();
+//         } catch (error) {
+//             console.error(error);
+//             return res.status(500).send('Error occurred while uploading to S3');
+//         }
+
+//         // Insert into database
+//         const s3ObjectUrl = `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`;
+
+//         try {
+//             const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_tags, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_tags, about, s3ObjectUrl]);
+//             res.status(200).json({
+//                 message: 'Image uploaded and portfolio item created',
+//                 id: result.rows[0].art_id,
+//             });
+//         } catch (error) {
+//             console.error(error);
+//             return res.status(500).send('Error occurred while inserting into the database');
+//         }
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).send('Internal server error');
+//     }
+// });
 
 // app.post('/', async (req, res) => {
 // })
