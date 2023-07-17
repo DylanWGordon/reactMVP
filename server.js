@@ -6,6 +6,7 @@ const { Pool } = pkg
 import cors from 'cors';
 import dotenv from 'dotenv';
 import multer from 'multer'
+import axios from 'axios'
 
 const app = express();
 app.use(cors({ origin: '*' }))
@@ -102,10 +103,12 @@ app.post(`/`, upload.single('image'), async (req, res) => {
         const { path, originalName } = req.file;
 
         // Fetch the file content
-        let fileContent;
+        let fileContent
         try {
-            const response = await fetch(`file://${path}`);
-            fileContent = await response.buffer();
+            const response = await axios.get(`file://${path}`, {
+                responseType: 'arraybuffer'
+            })
+            fileContent = response.data
         } catch (error) {
             console.error(error);
             return res.status(500).send('Error occurred while fetching file content');
