@@ -9,7 +9,7 @@ import IconItems from './IconItems.jsx'
 
 
 function App() {
-  const URL = '../server.js'
+  const URL = '../server.js/'
   const [artData, setArtData] = useState([])
   const [currentPage, setCurrentPage] = useState('')
 
@@ -17,11 +17,8 @@ function App() {
 
   useEffect(() => {
     const getData = async () => {
-      // const res = await axios.get(`${URL}/`)
-      // setArtData(res.data)
-      const res = await fetch(`${URL}/`);
-      const response = await res.json();
-      setArtData(response)
+      const res = await axios.get(${URL})
+      setArtData(res.data)
 
     }
     getData()
