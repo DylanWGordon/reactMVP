@@ -20,7 +20,6 @@ function App() {
     const getData = async () => {
       const res = await axios.get(URL)
       setArtData(res.data)
-
     }
     getData()
   }, [])

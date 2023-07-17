@@ -53,7 +53,7 @@ app.get(`/`, async (req, res) => {
 //Get one
 app.get(`/:id`, async (req, res) => {
     const { id } = req.params;
-    if (isNaN(Number.parseInt(id))) {
+    if (isNaN(parseInt(id))) {
         res.status(400).send("Bad Request")
     } else {
         try {

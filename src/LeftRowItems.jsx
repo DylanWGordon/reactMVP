@@ -3,7 +3,7 @@
 const LeftRowItems = ({ leftArr, setCurrentId, setCurrentPage })=>{
     
     const handleClick = (item) => {
-        setCurrentId(parseInt(item.art_id))
+        setCurrentId(item.art_id)
         setCurrentPage('single')
     }
 
@@ -11,7 +11,7 @@ const LeftRowItems = ({ leftArr, setCurrentId, setCurrentPage })=>{
     <>
         {
             leftArr.map((item) => (
-                <div className='thumbnailDiv' key={item.art_id} onClick={()=>{handleClick(item)}}>
+                <div className='thumbnailDiv' key={item.art_id} onClick={()=>handleClick(item)}>
                     <img src={item.image_url} className='imageThumb' />
                     </div >
                 

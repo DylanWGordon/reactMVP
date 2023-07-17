@@ -12,7 +12,7 @@ const CenterRowItems = ({ centerArr, setCurrentId, setCurrentPage })=>{
         {
             centerArr.map((item) => (
                 <div className='thumbnailDiv' key={item.art_id} onClick={()=>handleClick(item)}>
-                    <img src={item.image_url} className='imageThumb'/>
+                    <img src={item.image_url} className='imageThumb' />
                     </div >
                 
             ))
