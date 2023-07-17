@@ -48,7 +48,7 @@ app.get('/:id', async (req, res) => {
         req.status(400).send("Bad Request")
     } else {
         try {
-            const result = await pool.query('SELECT art_name, art_year, art_type, about, image_url FROM portfolio WHERE art_id = $1', [parseInt(id)]);
+            const result = await pool.query('SELECT art_name, art_year, art_tags, about, image_url FROM portfolio WHERE art_id = $1', [parseInt(id)]);
             if (result.rowCount === '0') {
                 res.status(404).send('Not Found')
             } else {
@@ -63,37 +63,86 @@ app.get('/:id', async (req, res) => {
 
 //create one
 
+// app.post('/', upload.single('image'), async (req, res) => {
+//         try {
+//             const { art_name, art_year, art_tags, about} = req.body;
+//             const { path, originalName } = req.file
+            
+//             const fileContent = await fetch(`file://${path}`)
+//             .then((res) => res.buffer());
+            
+//             const s3ObjectKey = s3KeyPrefix + originalName;
+
+//             const s3UploadParams = {
+//                 Bucket: s3BucketName,
+//                 Key: s3ObjectKey,
+//                 Body: fileContent
+//             }
+
+//             await s3.upload(s3UploadParams).promise();
+
+//             const s3ObjectUrl= `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`
+            
+//             const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_tags, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_tags, about, s3ObjectUrl]);
+//             res.status(200).json({
+//                 message: 'Image uploaded and portfolio item created',
+//                 id: result.rows[0].art_id
+//             });
+//         } catch (err) {
+//             console.error(err);
+//             res.status(500).send("Internal server error")
+//         }
+    
+// })
+
 app.post('/', upload.single('image'), async (req, res) => {
+    try {
+        const { art_name, art_year, art_tags, about } = req.body;
+        const { path, originalName } = req.file;
+
+        // Fetch the file content
+        let fileContent;
         try {
-            const { art_name, art_year, art_type, about} = req.body;
-            const { path, originalName } = req.file
-            
-            const fileContent = await fetch(`file://${path}`)
-            .then((res) => res.buffer());
-            
-            const s3ObjectKey = s3KeyPrefix + originalName;
+            const response = await fetch(`file://${path}`);
+            fileContent = await response.buffer();
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send('Error occurred while fetching file content');
+        }
 
-            const s3UploadParams = {
-                Bucket: s3BucketName,
-                Key: s3ObjectKey,
-                Body: fileContent
-            }
+        // Upload to S3
+        const s3ObjectKey = s3KeyPrefix + originalName;
+        const s3UploadParams = {
+            Bucket: s3BucketName,
+            Key: s3ObjectKey,
+            Body: fileContent,
+        };
 
-            await s3.upload(s3UokiadOarans).promise();
+        try {
+            await s3.upload(s3UploadParams).promise();
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send('Error occurred while uploading to S3');
+        }
 
-            const s3ObjectUrl= `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`
-            
-            const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_type, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_type, about, s3ObjectUrl]);
+        // Insert into database
+        const s3ObjectUrl = `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`;
+
+        try {
+            const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_tags, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_tags, about, s3ObjectUrl]);
             res.status(200).json({
                 message: 'Image uploaded and portfolio item created',
-                id: result.rows[0].art_id
+                id: result.rows[0].art_id,
             });
-        } catch (err) {
-            console.error(err);
-            res.status(500).send("Internal server error")
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send('Error occurred while inserting into the database');
         }
-    
-})
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+    }
+});
 
 // app.post('/', async (req, res) => {
 // })

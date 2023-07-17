@@ -3,7 +3,7 @@ CREATE TABLE portfolio(
     art_id SERIAL,
     art_name VARCHAR,
     art_year INTEGER,
-    art_type VARCHAR,
+    art_tags VARCHAR,
     about VARCHAR,
     image_url VARCHAR
 )

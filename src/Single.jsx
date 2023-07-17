@@ -1,12 +1,18 @@
 const Single = ({ artData, currentId, setCurrentId, setCurrentPage }) => {
     const single = artData[currentId - 1];
 
-//     const tagLister = (){
-//         let tags = '';
-//         single.art_tags.map(tag)=> {
-//     tags += tag
-// } return tags
-// }
+    const tagLister = ()=>{
+        // let tags = ''
+        // artData.art_tags.map((tag) => {
+        //     tags+=tag
+        // })
+        // tags.pop()
+        // return tags
+
+        tag
+}
+    
+    
 
     return (
         <div id='singleDiv'>
@@ -15,7 +21,7 @@ const Single = ({ artData, currentId, setCurrentId, setCurrentPage }) => {
                 <h4 id='singleHeader'>{single.art_name}</h4>
                 <p className='singleYear'>{single.art_year}</p>
                 <p className='singlePar'>{single.about}</p>
-                <p classname='singleTags'>Tags: {single.art_type}</p>
+                <p className='singleTags'>Tags: {single.art_tags}</p>
             </div>
       </div>
 )
