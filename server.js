@@ -64,7 +64,7 @@ app.get(`/id`, async (req, res) => {
 
 //create one
 
-app.post(`${URL}/`, upload.single('image'), async (req, res) => {
+app.post(`/`, upload.single('image'), async (req, res) => {
     console.log(req);
     try {
         const { art_name, art_year, art_tags, about } = req.body;
