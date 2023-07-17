@@ -3,7 +3,6 @@
 const CenterRowItems = ({ centerArr, setCurrentId, setCurrentPage })=>{
     
     const handleClick = (item) => {
-        console.log(item)
         setCurrentId(item.art_id)
         setCurrentPage('single')
     }

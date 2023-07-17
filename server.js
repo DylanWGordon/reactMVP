@@ -53,11 +53,11 @@ app.get(`/`, async (req, res) => {
 //Get one
 app.get(`/id`, async (req, res) => {
     const { id } = req.params;
-    if (isNaN(Number.isInteger(id))) {
+    if (isNaN(Number.parseInt(id))) {
         res.status(400).send("Bad Request")
     } else {
         try {
-            const result = await pool.query('SELECT art_name, art_year, art_tags, about, image_url FROM portfolio WHERE art_id = $1', [parseInt(id)]);
+            const result = await pool.query('SELECT art_name, art_year, art_tags, about, image_url FROM portfolio WHERE art_id = $1', [id]);
             if (result.rowCount === '0') {
                 res.status(404).send('Not Found')
             } else {
