@@ -25,8 +25,8 @@ const s3BucketName = 'fieryramencv';
 const s3KeyPrefix= 'cvUploads/'
 
 
-app.use(express.static("dist"))
-// app.use(express.static("public"))
+// app.use(express.static("dist"))
+app.use(express.static("public"))
 
 //get all
 app.get("/", async (req, res) => {
@@ -48,7 +48,7 @@ app.get('/:id', async (req, res) => {
         req.status(400).send("Bad Request")
     } else {
         try {
-            const result = await pool.query('SELECT art_name, art_year, art_type, about, image_url FROM portfolio WHERE art_id = $1', [id]);
+            const result = await pool.query('SELECT art_name, art_year, art_type, about, image_url FROM portfolio WHERE art_id = $1', [parseInt(id)]);
             if (result.rowCount === '0') {
                 res.status(404).send('Not Found')
             } else {
