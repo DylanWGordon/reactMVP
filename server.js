@@ -24,8 +24,8 @@ const pool = new Pool({
 AWS.config.update({
     region: 'us-west-2',
     credentials: new AWS.Credentials({
-        accessKeyId: 'AKIASETWN62PNCJC245T',
-        secretAccessKey: 'fqTZfRDIDbUh2wzbirceNc+7fty00eHXyjczBaIEy',
+        accessKeyId: 'AKIASETWN62PDKHMWYH6',
+        secretAccessKey: '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'
     }),
 });
 
