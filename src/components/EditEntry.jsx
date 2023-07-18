@@ -77,7 +77,15 @@ console.log(imgFile)
     const handleDelete = async() => {
         const response = await axios.delete(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`)
         console.log(response.data)
+
+        const resetData = async () => {
+            const res = await axios.get(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`)
+            setArtData(res.data)
+        }
+        resetData()
+        
         setCurrentPage('Portfolio')
+
         }
     
     
