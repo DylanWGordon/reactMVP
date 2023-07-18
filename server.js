@@ -236,7 +236,7 @@ app.patch(`/pieces/:id`, upload.single('image'), async (req, res) => {
                         inputs += keyList[i] + ' = ' + patchData[keyList[i]]
                     }
                 } sqlString += inputs;
-                sqlString += ` WHERE id = ` + `\`` + id + `\` RETURNING *`;
+                sqlString += ' WHERE id = ' + '\'' + id + '\' RETURNING *';
 
                 const result = await pool.query(sqlString)
                 if (result.rowCount === 0) {

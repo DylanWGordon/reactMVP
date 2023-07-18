@@ -51,19 +51,22 @@ console.log(imgFile)
             const inputData = {}
             if (nameStr) {
                 inputData.art_name= nameStr
-            } if (yearNum) {
+            } if (yearNum > 0) {
                 inputData.art_year = yearNum
-            } if (tagStr) {
+            } if (tagStr.length > 0) {
                 inputData.art_tags = tagStr
             } if (aboutStr) {
                 inputData.about = aboutStr
             } if (imgFile) {
                 inputData.image = imgFile
             }
+            console.log(inputData)
             const formData = new FormData();
+
             for (const key in inputData) {
                 formData.append(key, inputData[key])
             }
+            
             const response = await axios.patch(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`, formData)
             console.log(response.data)
             setSingleData(response.data)
