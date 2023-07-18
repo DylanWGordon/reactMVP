@@ -38,7 +38,7 @@ app.use(express.static("dist"))
 // app.use(express.static("public"))
 
 //get all
-app.get(`/`, async (req, res) => {
+app.get(`/pieces`, async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM portfolio ORDER BY art_year DESC');
         res.json(result.rows)
@@ -51,7 +51,7 @@ app.get(`/`, async (req, res) => {
 
 
 //Get one
-app.get(`/:id`, async (req, res) => {
+app.get(`/pieces/:id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(parseInt(id))) {
         res.status(400).send("Bad Request")
