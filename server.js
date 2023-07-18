@@ -113,7 +113,7 @@ app.delete(`/pieces/:id`, async (req, res) => {
         res.status(400).send("Bad Request")
     } else {
         try {
-            const result = await pool.query('DELETE FROM portfolio WHERE id = $1 RETURNING *', [parseInt(Id)]);
+            const result = await pool.query('DELETE FROM portfolio WHERE id = $1 RETURNING *', [parseInt(id)]);
             if (result.rowCount === 0) {
                 res.status(404).send('Not Found')
             } else { }
