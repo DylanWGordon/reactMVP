@@ -117,7 +117,7 @@ app.delete(`/pieces/:id`, async (req, res) => {
             if (result.rowCount === 0) {
                 res.status(404).send('Not Found')
             } else { }
-            res.json(result.rows(0))
+            res.json(result.rows[0])
         } catch (err) {
             console.error(err);
             res.status(500).send('Internal Server Error')
