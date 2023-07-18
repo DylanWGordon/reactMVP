@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './components/Navbar.jsx'
 import Header from './components/Header.jsx'
-import Body from './components/components/Body.jsx'
+import Body from './components/Body.jsx'
 import IconItems from './components/IconItems.jsx'
 
 
