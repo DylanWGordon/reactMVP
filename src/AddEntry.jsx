@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const AddEntry = () => {
+const AddEntry = ({setArtData}) => {
     let nameStr;
     let yearNum = 0;
     let tagStr = [];
@@ -64,7 +64,11 @@ console.log(imgFile)
         } catch(err) {
             console.error(err)
         }
-
+        const resetData = async() => {
+            const res = await axios.get('https://kane-cv-web-service.onrender.com/')
+            setArtData(res.data)
+        }
+        resetData()
     }
     
 

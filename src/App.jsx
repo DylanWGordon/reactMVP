@@ -39,7 +39,7 @@ function App() {
       </div>
       <div id='right'>
         <Header />
-        <Body currentPage={currentPage} setCurrentPage={setCurrentPage} artData={artData} />
+        <Body currentPage={currentPage} setCurrentPage={setCurrentPage} artData={artData} setArtData={setArtData} />
       </div>
     </>
   )

@@ -34,8 +34,8 @@ const s3BucketName = 'fieryramencv';
 const s3KeyPrefix = 'cvUploads/'
 
 
-// app.use(express.static("dist"))
-app.use(express.static("public"))
+app.use(express.static("dist"))
+// app.use(express.static("public"))
 
 //get all
 app.get(`/`, async (req, res) => {

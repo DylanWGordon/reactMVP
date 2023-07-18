@@ -5,7 +5,7 @@ import Single from './Single.jsx'
 import Filters from './Filters.jsx'
 import About from './About.jsx'
 
-const Body = ({ currentPage, setCurrentPage, artData }) => {
+const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
     //get 1 functionality up next
     const [currentId, setCurrentId] = useState(0)
 
@@ -26,7 +26,7 @@ const Body = ({ currentPage, setCurrentPage, artData }) => {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded noscroll" >
-                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} setArtData={setArtData} />
                     <div className='thumbs'>
                         <Single artData={artData} setCurrentPage={setCurrentPage} currentId={currentId} setCurrentId={setCurrentId} />
                     </div>
@@ -37,7 +37,6 @@ const Body = ({ currentPage, setCurrentPage, artData }) => {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded noscroll" >
-                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     <div className='thumbs'>
                         <About />
                     </div>
@@ -48,7 +47,7 @@ const Body = ({ currentPage, setCurrentPage, artData }) => {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded">
-                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                    <Filters setArtData={setArtData} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                 <div className='thumbs'>
                         <Portfolio artData={artData} setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} />
                 </div>

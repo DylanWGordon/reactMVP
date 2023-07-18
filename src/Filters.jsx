@@ -3,7 +3,7 @@ import AddEntry from './AddEntry.jsx'
 import Breadcrumbs from './Breadcrumbs.jsx'
 import EditEntry from './EditEntry.jsx'
 
-const Filters = (currentPage) => {
+const Filters = ({ currentPage, setArtData }) => {
     const [expanded, setExpanded] = useState(false)
 
     const toggle = () => {
@@ -19,7 +19,7 @@ const Filters = (currentPage) => {
             return (
                 <div id='filterBar' class='rounded'>
                     <Breadcrumbs />
-                    <AddEntry />
+                    <AddEntry setArtData={setArtData} />
                     <button onClick={() => toggle()}>^</button>
                 </div>
             )
