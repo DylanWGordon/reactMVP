@@ -7,7 +7,6 @@ import About from './About.jsx'
 
 
 const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
-    //get 1 functionality up next
     const [currentId, setCurrentId] = useState(0)
     const [singleData, setSingleData] = useState({})
     
@@ -26,9 +25,9 @@ const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded">
-                    <Filters  setArtData={setArtData} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                    <Filters  setArtData={setArtData} currentPage={currentPage} setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} />
                     <div className='thumbs'>
-                        <Portfolio  artData={artData} setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} currentPage={currentPage} />
+                        <Portfolio setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} currentPage={currentPage} />
                     </div>
                 </div>
             </div>

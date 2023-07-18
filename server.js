@@ -159,9 +159,8 @@ app.patch(`/pieces/:id`, upload.single('image'), async (req, res) => {
                 const keyList = Object.keys(patchData);
                 let sqlString = 'UPDATE portfolio SET '
                 let inputs = ''
-                if (s3ObjectUrl) {
-                    patchData.image_url = s3ObjectUrl
-                }
+                 patchData.image_url = s3ObjectUrl
+                console.log(patchData)
                 for (let i = 0; i < keyList.length; i++) {
                     if (patchData[keyList[i]] === undefined || patchData[keyList[i]] === '') {
                         res.status(400).send('Bad request');

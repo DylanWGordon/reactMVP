@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const AddEntry = ({setArtData}) => {
+const AddEntry = ({setArtData, setCurrentId, setCurrentPage}) => {
     let nameStr;
     let yearNum = 0;
     let tagStr = [];
@@ -59,16 +59,19 @@ console.log(imgFile)
             for (const key in inputData) {
                 formData.append(key, inputData[key])
             }
-            const response = await axios.post(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`, formData)
+            const response = await axios.post(`https://kane-cv-web-service.onrender.com/pieces`, formData)
             console.log(response.data)
         } catch(err) {
             console.error(err)
         }
-        const resetData = async() => {
-            const res = await axios.get(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`)
+        const getData = async () => {
+            const res = await axios.get('https://kane-cv-web-service.onrender.com/pieces')
+            console.log(res.data)
             setArtData(res.data)
+            setCurrentId(res.data.id)
+            setCurrentPage('single')
         }
-        resetData()
+        getData()
     }
     
 

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const EditEntry = ({ currentId, setSingleData, setCurrentPage }) => {
+const EditEntry = ({ currentId, setSingleData, setCurrentPage, setArtData }) => {
     let nameStr;
     let yearNum = 0;
     let tagStr = [];
@@ -76,14 +76,14 @@ console.log(imgFile)
 
     const handleDelete = async() => {
         const response = await axios.delete(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`)
-        console.log(response.data)
+        
 
         const resetData = async () => {
             const res = await axios.get(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`)
             setArtData(res.data)
         }
-        resetData()
         
+        resetData()
         setCurrentPage('Portfolio')
 
         }
@@ -95,24 +95,24 @@ console.log(imgFile)
         <>
         <form>
             
-            <label for="uploadName">Name:</label>
-            <input type="text" id="value1" name="uploadName" maxLength="20" onChange={nameHandler}  required></input>
+            <label for="editName">Name:</label>
+            <input type="text" id="value1" name="editName" maxLength="20" onChange={nameHandler}  required></input>
 
                 
-                <label for="uploadYear">Year:</label>
-                <input type="number" id="uploadYear" name="uploadYear" onChange={yearHandler} required></input>
+                <label for="editYear">Year:</label>
+                <input type="number" id="editYear" name="editYear" onChange={yearHandler} required></input>
 
                   
-                    <label for="uploadTags">Tags:</label>
-                    <input type="text" id="uploadTags" name="uploadTags" pattern="^[a-zA-Z]+(,[a-zA-Z]+)*$" title="Enter values separated by commas" onChange={tagHandler} required></input>
+                    <label for="editTags">Tags:</label>
+                    <input type="text" id="editTags" name="editTags" pattern="^[a-zA-Z]+(,[a-zA-Z]+)*$" title="Enter values separated by commas" onChange={tagHandler} required></input>
 
                        
-                        <label for="uploadAbout">About:</label>
-            <input type="text" id="uploadAbout" name="uploadAbout" maxLength="255" onChange={aboutHandler} required></input>
+                        <label for="editAbout">About:</label>
+            <input type="text" id="editAbout" name="editAbout" maxLength="255" onChange={aboutHandler} required></input>
 
                          
-                            <label for="uploadImage">Image:</label>
-            <input type="file" id="uploadImage" name="image" accept=".png, .gif, .jpg, .jpeg" onChange={imgHandler} required></input>
+                            <label for="editImage">Image:</label>
+            <input type="file" id="editImage" name="image" accept=".png, .gif, .jpg, .jpeg" onChange={imgHandler} required></input>
 
               
                                 <input type="button" value="Submit" onClick={handleSubmit}></input>
