@@ -181,41 +181,71 @@ app.delete(`/:id`, async (req, res) => {
 })
 
 //update one
-app.patch(`/:id`, async (req, res) => {
-    const { id } = req.params;
-    if (isNaN(parseInt(id))) {
-        res.status(400).send("Bad Request")
-    } else {
-        const patchData = req.body
-        const keyList = Object.keys(patchData);
-        let sqlString = 'UPDATE portfolio SET '
-        let inputs = ''
-        for (let i = 0; i < keyList.length; i++) {
-            if (patchData[keyList[i]] === undefined || patchData[keyList[i]] === '') {
-                res.status(400).send('Bad request');
-                return;
-            }
-            if (keyList[i] !== 'year') {
-                patchData[keyList[i]] = '\'' + patchData[keyList[i]] + '\'';
-            } else { //
-                if (isNaN(parseInt(patchData[keyList[i]]))) {
-                    res.status(400).type('text/plain').send('Bad Request');
-                    return;
-                }
-            } if (i < keyList.length - 1) {// for each key found in patchdata,
-                //  update the preexisting data's value and separate with commas
-                inputs += keyList[i] + ' = ' + patchData[keyList[i]] + ',';
-            } else { //last item, no comma
-                inputs += keyList[i] + ' = ' + patchData[keyList[i]]
-            }
-        } sqlString += inputs;
-        sqlString += ` WHERE id = ` + `\`` + id + `\` RETURNING *`;
+app.patch(`/:id`, upload.single('image'), async (req, res) => {
+    let s3ObjectUrl;
+    if (req.file) {
         try {
-            const result = await pool.query(sqlString)
-            if (result.rowCount === 0) {
-                res.status(404).send('Not Found')
+            const { art_name, art_year, art_tags, about } = req.body;
+            const { path, originalname } = req.file;
+            
+            // Read the file content from the local filesystem
+            const fileContent = fs.readFileSync(path);
+            
+            // Upload to S3
+            const s3ObjectKey = s3KeyPrefix + originalname;
+            const s3UploadParams = {
+                Bucket: s3BucketName,
+                Key: s3ObjectKey,
+                Body: fileContent,
+            };
+            
+            await s3.upload(s3UploadParams).promise();
+            
+            // Insert into database
+           s3ObjectUrl = `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`;
+            
+        } catch (err) {
+            console.error(err)
+        }
+        try {
+            const { id } = req.params;
+            if (isNaN(parseInt(id))) {
+                res.status(400).send("Bad Request")
             } else {
-                res.json(result.rows[0])
+                const patchData = req.body
+                const keyList = Object.keys(patchData);
+                let sqlString = 'UPDATE portfolio SET '
+                let inputs = ''
+                if (s3ObjectUrl) {
+                    patchData.image_url = s3ObjectUrl
+                }
+                for (let i = 0; i < keyList.length; i++) {
+                    if (patchData[keyList[i]] === undefined || patchData[keyList[i]] === '') {
+                        res.status(400).send('Bad request');
+                        return;
+                    }
+                    if (keyList[i] !== 'art_year') {
+                        patchData[keyList[i]] = '\'' + patchData[keyList[i]] + '\'';
+                    } else { //
+                        if (isNaN(parseInt(patchData[keyList[i]]))) {
+                            res.status(400).type('text/plain').send('Bad Request');
+                            return;
+                        }
+                    } if (i < keyList.length - 1) {// for each key found in patchdata,
+                        //  update the preexisting data's value and separate with commas
+                        inputs += keyList[i] + ' = ' + patchData[keyList[i]] + ',';
+                    } else { //last item, no comma
+                        inputs += keyList[i] + ' = ' + patchData[keyList[i]]
+                    }
+                } sqlString += inputs;
+                sqlString += ` WHERE id = ` + `\`` + id + `\` RETURNING *`;
+
+                const result = await pool.query(sqlString)
+                if (result.rowCount === 0) {
+                    res.status(404).send('Not Found')
+                } else {
+                    res.json(result.rows[0])
+                }
             }
         } catch (err) {
             console.error(err)
@@ -225,6 +255,7 @@ app.patch(`/:id`, async (req, res) => {
 })
 
 
+
 app.listen(PORT, () => {
     console.log(`listening on Port ${PORT}`);
-});
+})

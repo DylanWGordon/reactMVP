@@ -3,6 +3,7 @@ import Contact from './Contact.jsx'
 import Portfolio from './Portfolio.jsx';
 import Single from './Single.jsx'
 import Filters from './Filters.jsx'
+import About from './About.jsx'
 
 const Body = ({ currentPage, setCurrentPage, artData }) => {
     //get 1 functionality up next
@@ -13,17 +14,32 @@ const Body = ({ currentPage, setCurrentPage, artData }) => {
     if (currentPage === 'Contact') {
         return (
             <div id='mainBody'>
-            <div id='bodyBody' className='rounded'>
-                <Contact currentPage={currentPage} />
-            </div>
+                <div id='bodyBody' className="rounded noscroll" >
+                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                    <div className='thumbs'>
+                        <About />
+                    </div>
+                </div>
             </div>
         )
-    } else if (currentPage === 'single') {
+    } else if(currentPage === 'single') {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded noscroll" >
+                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     <div className='thumbs'>
                         <Single artData={artData} setCurrentPage={setCurrentPage} currentId={currentId} setCurrentId={setCurrentId} />
+                    </div>
+                </div>
+            </div>
+        )
+    } else if (currentPage === 'About Me') {
+        return (
+            <div id='mainBody'>
+                <div id='bodyBody' className="rounded noscroll" >
+                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                    <div className='thumbs'>
+                        <About />
                     </div>
                 </div>
             </div>
@@ -32,7 +48,7 @@ const Body = ({ currentPage, setCurrentPage, artData }) => {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded">
-                <Filters />
+                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} />
                 <div className='thumbs'>
                         <Portfolio artData={artData} setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} />
                 </div>

@@ -101,21 +101,54 @@ height:8dvh;
 
 #bodyBody{
   background-color:rgb(251, 248, 245);
-  margin:1rem;
-  width:calc(92dvw - calc(1rem - 1px));
-  height:calc(85dvh - 1.3rem);
+  margin:0rem;
+  width:calc(84dvw - calc(1rem - 1px));
+  height:calc(92dvh - 1.3rem);
   outline:1px solid rgba(1, 4, 8, .2);
-  padding:1.3rem;
   position:relative;
+  overflow-x:hidden;
   bottom:6%;
   top:calc(-1% - 1px);
   overflow-y:scroll;
+  overflow-clip-margin: -20px;;
 }
+#bodyBody::-webkit-scrollbar {
+  width: 0.1rem;
+  position:relative;
+  left:1rem;;
+  /* Set the width of the custom scrollbar */
+  background-color: transparent;
+  /* Set the background color of the custom scrollbar */
+}
+
+#filterBar{
+  position:sticky;
+  top:0;
+  z-index:1;
+  background-color: bisque;
+  width:calc(81dvw + 0.2rem);
+  padding:0.9rem;
+  border-bottom:2px solid rgb(253, 192, 119)
+}
+#collapsedFilter{
+  position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: bisque;
+    width: calc(81dvw + 0.2rem);
+    padding: 0.9rem;
+    border-bottom: 2px solid rgb(253, 192, 119)
+}
+
 .thumbs{
-  width:100%;
-display: flex;
-flex-flow:row;
-justify-content:space-around;
+  background-color: rgb(249, 239, 226);
+  width:calc(80dvw + 0.4rem + 1px);
+  height:fit-content;
+  display: flex;
+  flex-flow:row;
+  justify-content:space-around;
+  padding:1.3rem;
+  position:relative;
 }
 
 .rowDiv{
@@ -136,26 +169,40 @@ justify-content:space-around;
   cursor:pointer;
 }
 
+.thumbBorder{
+  display:flex;
+  position:relative;
+  background-color:rgb(255, 241, 222);
+  border: 1px solid rgba(1, 4, 8, .2);
+  place-content: center;
+  border-radius:2px;
+  padding:2px;
+}
 .imageThumb{
-  width:100%;
-  margin:.2rem;
+  width:100%
 }
 
+
 #singleDiv{
-  height:calc(86dvh - 10px);
-  position:absolute;
+  height:71dvh;
+  position:sticky;
+  top:0;
+  z-index: 2;
+  display:flex;
+  margin-bottom:0;
+  place-self: center;
   
 }
 
 #singleImg{
   aspect-ratio: initial;
-  height:80%;
+  height:100%;
   position:sticky;
 }
 
 #singleInfo{
   margin:0;
-  height:14%;
+  height:100%;
   background-color:azure;
   padding:.9rem;
   text-align: center;
@@ -180,6 +227,7 @@ justify-content:space-around;
   list-style-type: none;
 }
 
+
 .navListItem{
   gap:1.3rem;
 }
@@ -203,10 +251,12 @@ justify-content:space-around;
 
 ::-webkit-scrollbar-thumb {
   background-color: transparent;
+  position: relative;
   /* Hide the thumb */
 }
 
 ::-webkit-scrollbar-track {
   background-color: transparent;
   /* Hide the track */
+  width:0;
 }

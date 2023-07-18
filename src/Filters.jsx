@@ -1,22 +1,44 @@
 import { useState } from 'react'
 import AddEntry from './AddEntry.jsx'
+import Breadcrumbs from './Breadcrumbs.jsx'
+import EditEntry from './EditEntry.jsx'
 
-const Filters = () => {
+const Filters = (currentPage) => {
     const [expanded, setExpanded] = useState(false)
 
     const toggle = () => {
         setExpanded(!expanded)
     }
-
-    if (expanded === false) {
-        return <button id='collapsedFilter' onClick={() => toggle()}>v</button>
-    } else {
-        return (
-            <div>
-                <AddEntry />
-                <button onClick={()=>toggle()}>^</button>
+    if (currentPage !== 'single') {
+        if (expanded === false) {
+            return <div id='collapsedFilter'>
+                <Breadcrumbs />
+                <button onClick={() => toggle()}>v</button>
             </div>
-        )
+        } else {
+            return (
+                <div id='filterBar' class='rounded'>
+                    <Breadcrumbs />
+                    <AddEntry />
+                    <button onClick={() => toggle()}>^</button>
+                </div>
+            )
+        }
+    } else {
+        if (expanded === false) {
+            return <div id='collapsedFilter'>
+                <Breadcrumbs />
+                <button onClick={() => toggle()}>v</button>
+            </div>
+        } else {
+            return (
+                <div id='filterBar' class='rounded'>
+                    <Breadcrumbs />
+                    <EditEntry />
+                    <button onClick={() => toggle()}>^</button>
+                </div>
+            )
+        }
     }
 
 

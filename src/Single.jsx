@@ -6,11 +6,16 @@ const Single = ({ artData, currentId, setCurrentId, setCurrentPage }) => {
   
     const URL = 'https://kane-cv-web-service.onrender.com/'
     const [singleData, setSingleData] = useState({})
+    useEffect(() => {
         const getData = async () => {
-            const res = await axios.get(`${URL}${currentId}`)
-            setSingleData(res.data)
-        }
-    getData()
+            const res = await axios.get(`${URL}${currentId}`);
+            setSingleData(res.data);
+        };
+
+        getData();
+    }, [currentId]);
+
+    
     
     
     
