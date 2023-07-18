@@ -48,12 +48,17 @@ console.log(imgFile)
     const handleSubmit = async () => {
 
         try {
-            const inputData = {
-                art_name: nameStr,
-                art_year: yearNum,
-                art_tags: tagStr,
-                about: aboutStr,
-                image: imgFile,
+            const inputData = {}
+            if (nameStr) {
+                inputData.art_name= nameStr
+            } if (yearNum) {
+                inputData.art_year = yearNum
+            } if (tagStr) {
+                inputData.art_tags = tagStr
+            } if (aboutStr) {
+                inputData.about = aboutStr
+            } if (imgFile) {
+                inputData.image = imgFile
             }
             const formData = new FormData();
             for (const key in inputData) {

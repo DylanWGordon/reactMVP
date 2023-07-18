@@ -183,9 +183,9 @@ app.delete(`/:id`, async (req, res) => {
 //update one
 app.patch(`/:id`, upload.single('image'), async (req, res) => {
     let s3ObjectUrl;
-    if (req.file) {
         try {
             const { art_name, art_year, art_tags, about } = req.body;
+            if(req.file){
             const { path, originalname } = req.file;
             
             // Read the file content from the local filesystem
@@ -204,10 +204,8 @@ app.patch(`/:id`, upload.single('image'), async (req, res) => {
             // Insert into database
            s3ObjectUrl = `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`;
             
-        } catch (err) {
-            console.error(err)
-        }
-        try {
+            
+            }
             const { id } = req.params;
             if (isNaN(parseInt(id))) {
                 res.status(400).send("Bad Request")
@@ -251,7 +249,6 @@ app.patch(`/:id`, upload.single('image'), async (req, res) => {
             console.error(err)
             res.status(500).send('Internal Server Error')
         }
-    }
 })
 
 
