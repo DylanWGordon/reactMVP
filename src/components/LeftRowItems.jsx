@@ -7,12 +7,14 @@ const LeftRowItems = ({ leftArr, setCurrentId, setCurrentPage })=>{
         setCurrentPage('single')
     }
 
+   
+
     return (
     <>
         {
             leftArr.map((item) => (
                 <div className='thumbnailDiv' key={item.art_id} onClick={() => handleClick(item)}>
-                    <div class='thumbBorder'>
+                    <div className='thumbBorder'>
                     <img src={item.image_url} className='imageThumb' />
                     </div >
                 </div>

@@ -106,61 +106,6 @@ app.post(`/pieces`, upload.single('image'), async (req, res) => {
 });
 
 
-// app.post(`/`, upload.single('image'), async (req, res) => {
-//     console.log(upload.single('image'))
-//     try {
-//         const { art_name, art_year, art_tags, about } = req.body;
-//         const { path, originalName } = req.file;
-
-//         // Fetch the file content
-//         let fileContent
-//         try {
-//             const response = await axios.get(`file://${path}`, {
-//                 responseType: 'arraybuffer'
-//             })
-//             fileContent = response.data
-//         } catch (error) {
-//             console.error(error);
-//             return res.status(500).send('Error occurred while fetching file content');
-//         }
-
-//         // Upload to S3
-//         const s3ObjectKey = s3KeyPrefix + originalName;
-//         const s3UploadParams = {
-//             Bucket: s3BucketName,
-//             Key: s3ObjectKey,
-//             Body: fileContent,
-//         };
-
-//         try {
-//             await s3.upload(s3UploadParams).promise();
-//         } catch (error) {
-//             console.error(error);
-//             return res.status(500).send('Error occurred while uploading to S3');
-//         }
-
-//         // Insert into database
-//         const s3ObjectUrl = `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`;
-
-//         try {
-//             const result = await pool.query('INSERT INTO portfolio(art_name, art_year, art_tags, about, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *', [art_name, art_year, art_tags, about, s3ObjectUrl]);
-//             res.status(200).json({
-//                 message: 'Image uploaded and portfolio item created',
-//                 id: result.rows[0].art_id,
-//             });
-//         } catch (error) {
-//             console.error(error);
-//             return res.status(500).send('Error occurred while inserting into the database');
-//         }
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Internal server error');
-//     }
-// });
-
-// app.post('/', async (req, res) => {
-// })
-
 //Delete one;
 app.delete(`/pieces/:id`, async (req, res) => {
     const { id } = req.params;
@@ -168,7 +113,7 @@ app.delete(`/pieces/:id`, async (req, res) => {
         res.status(400).send("Bad Request")
     } else {
         try {
-            const result = await pool.query('DELETE FROM portfolio WHERE id = $1 RETURNING *', [parseIntId]);
+            const result = await pool.query('DELETE FROM portfolio WHERE id = $1 RETURNING *', [parseInt(Id)]);
             if (result.rowCount === 0) {
                 res.status(404).send('Not Found')
             } else { }

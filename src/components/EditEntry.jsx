@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const EditEntry = ({ currentId, setSingleData }) => {
+const EditEntry = ({ currentId, setSingleData, setCurrentPage }) => {
     let nameStr;
     let yearNum = 0;
     let tagStr = [];
@@ -66,19 +66,25 @@ console.log(imgFile)
             for (const key in inputData) {
                 formData.append(key, inputData[key])
             }
-            
             const response = await axios.patch(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`, formData)
             console.log(response.data)
             setSingleData(response.data)
         } catch(err) {
             console.error(err)
         }
-
     }
+
+    const handleDelete = async() => {
+        const response = await axios.delete(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`)
+        console.log(response.data)
+        setCurrentPage('Portfolio')
+        }
+    
     
 
 
     return (
+        <>
         <form>
             
             <label for="uploadName">Name:</label>
@@ -102,7 +108,10 @@ console.log(imgFile)
 
               
                                 <input type="button" value="Submit" onClick={handleSubmit}></input>
-                                </form>
+        </form>
+        
+                    <button onClick={()=>{handleDelete()}}>Delete</button>
+        </>
 )
 
 }

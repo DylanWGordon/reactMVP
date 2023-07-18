@@ -1,11 +1,10 @@
 
 
-const RightRowItems = ({ rightArr, setCurrentPage, setCurrentId })=>{
+const RightRowItems = ({ rightArr, setCurrentId, setCurrentPage })=>{
     
     const handleClick = (item) => {
         setCurrentId(item.art_id)
         setCurrentPage('single')
-        console.log(item.art_id)
     }
 
     return (
@@ -13,7 +12,7 @@ const RightRowItems = ({ rightArr, setCurrentPage, setCurrentId })=>{
         {
             rightArr.map((item) => (
                 <div className='thumbnailDiv' key={item.art_id} onClick={()=>handleClick(item)} >
-                    <div class='thumbBorder'>
+                    <div className='thumbBorder'>
                         <img src={item.image_url} className='imageThumb' />
                     </div >
                     </div >

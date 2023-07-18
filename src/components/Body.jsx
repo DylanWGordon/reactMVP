@@ -10,16 +10,25 @@ const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
     //get 1 functionality up next
     const [currentId, setCurrentId] = useState(0)
     const [singleData, setSingleData] = useState({})
-
-
+    
 
     if (currentPage === 'Contact') {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded noscroll" >
-                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} />
                     <div className='thumbs'>
                         <About />
+                    </div>
+                </div>
+            </div>
+        )
+    } else if (currentPage === 'Portfolio') {
+        return (
+            <div id='mainBody'>
+                <div id='bodyBody' className="rounded">
+                    <Filters  setArtData={setArtData} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                    <div className='thumbs'>
+                        <Portfolio  artData={artData} setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} currentPage={currentPage} />
                     </div>
                 </div>
             </div>
@@ -28,7 +37,7 @@ const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded noscroll" >
-                    <Filters setSingleData={setSingleData} currentPage={currentPage} currentId={currentId} setCurrentPage={setCurrentPage} setArtData={setArtData} />
+                    <Filters setSingleData={setSingleData} setCurrentPage={setCurrentPage} currentPage={currentPage} currentId={currentId} setArtData={setArtData}  />
                     <div className='thumbs'>
                         <Single artData={artData} setSingleData={setSingleData} singleData={singleData} setCurrentPage={setCurrentPage} currentId={currentId} setCurrentId={setCurrentId} />
                     </div>
@@ -45,19 +54,8 @@ const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
                 </div>
             </div>
         )
-    } else if (currentPage === 'Portfolio') {
-        return (
-            <div id='mainBody'>
-                <div id='bodyBody' className="rounded">
-                    <Filters setArtData={setArtData} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-                    <div className='thumbs'>
-                        <Portfolio artData={artData} setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} />
-                    </div>
-                </div>
-            </div>
-        )
     }
 }
-
-
-export default Body
+    
+    
+    export default Body

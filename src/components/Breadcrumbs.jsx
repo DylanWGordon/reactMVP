@@ -1,6 +1,6 @@
-const Breadcrumbs = () => {
+const Breadcrumbs = ({ setCurrentPage }) => {
 
-    return <button>back</button>
+    return <button onClick={()=>setCurrentPage('Portfolio')}>back</button>
 }
 
 export default Breadcrumbs

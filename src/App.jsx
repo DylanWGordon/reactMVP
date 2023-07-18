@@ -25,10 +25,6 @@ function App() {
   }, [])
   console.log(artData)
 
-
-
-
-
   return (
     <>
       <div id="left">
