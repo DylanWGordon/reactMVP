@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const EditEntry = () => {
+const EditEntry = ({ currentId, setSingleData }) => {
     let nameStr;
     let yearNum = 0;
     let tagStr = [];
@@ -64,8 +64,9 @@ console.log(imgFile)
             for (const key in inputData) {
                 formData.append(key, inputData[key])
             }
-            const response = await axios.patch('https://kane-cv-web-service.onrender.com/', formData)
+            const response = await axios.patch(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`, formData)
             console.log(response.data)
+            setSingleData(response.data)
         } catch(err) {
             console.error(err)
         }

@@ -5,9 +5,11 @@ import Single from './Single.jsx'
 import Filters from './Filters.jsx'
 import About from './About.jsx'
 
+
 const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
     //get 1 functionality up next
     const [currentId, setCurrentId] = useState(0)
+    const [singleData, setSingleData] = useState({})
 
 
 
@@ -26,9 +28,9 @@ const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded noscroll" >
-                    <Filters currentPage={currentPage} setCurrentPage={setCurrentPage} setArtData={setArtData} />
+                    <Filters setSingleData={setSingleData} currentPage={currentPage} currentId={currentId} setCurrentPage={setCurrentPage} setArtData={setArtData} />
                     <div className='thumbs'>
-                        <Single artData={artData} setCurrentPage={setCurrentPage} currentId={currentId} setCurrentId={setCurrentId} />
+                        <Single artData={artData} setSingleData={setSingleData} singleData={singleData} setCurrentPage={setCurrentPage} currentId={currentId} setCurrentId={setCurrentId} />
                     </div>
                 </div>
             </div>

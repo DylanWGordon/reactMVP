@@ -72,7 +72,7 @@ app.get(`/pieces/:id`, async (req, res) => {
 
 //create one
 
-app.post(`/`, upload.single('image'), async (req, res) => {
+app.post(`/pieces`, upload.single('image'), async (req, res) => {
     console.log(req);
     try {
         const { art_name, art_year, art_tags, about } = req.body;
@@ -162,7 +162,7 @@ app.post(`/`, upload.single('image'), async (req, res) => {
 // })
 
 //Delete one;
-app.delete(`/:id`, async (req, res) => {
+app.delete(`/pieces/:id`, async (req, res) => {
     const { id } = req.params;
     if (isNaN(Number.parseInt(id))) {
         res.status(400).send("Bad Request")
@@ -181,7 +181,7 @@ app.delete(`/:id`, async (req, res) => {
 })
 
 //update one
-app.patch(`/:id`, upload.single('image'), async (req, res) => {
+app.patch(`/pieces/:id`, upload.single('image'), async (req, res) => {
     let s3ObjectUrl;
         try {
             const { art_name, art_year, art_tags, about } = req.body;

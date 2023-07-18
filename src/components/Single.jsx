@@ -1,14 +1,14 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import {useEffect} from 'react'
 
-const Single = ({ artData, currentId, setCurrentId, setCurrentPage }) => {
+const Single = ({ currentId, setSingleData, singleData }) => {
 
   
-    const URL = 'https://kane-cv-web-service.onrender.com/'
-    const [singleData, setSingleData] = useState({})
+    const URL = `https://kane-cv-web-service.onrender.com/pieces/${currentId}`
+    
     useEffect(() => {
         const getData = async () => {
-            const res = await axios.get(`${URL}${currentId}`);
+            const res = await axios.get(URL);
             setSingleData(res.data);
         };
 
