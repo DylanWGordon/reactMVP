@@ -22,7 +22,7 @@ const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
                 </div>
             </div>
         )
-    } else if(currentPage === 'single') {
+    } else if (currentPage === 'single') {
         return (
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded noscroll" >
@@ -48,10 +48,10 @@ const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded">
                     <Filters setArtData={setArtData} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-                <div className='thumbs'>
+                    <div className='thumbs'>
                         <Portfolio artData={artData} setCurrentPage={setCurrentPage} setCurrentId={setCurrentId} />
+                    </div>
                 </div>
-            </div>
             </div>
         )
     }
