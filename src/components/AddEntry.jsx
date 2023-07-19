@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const AddEntry = ({setArtData, setCurrentId, setCurrentPage}) => {
+const AddEntry = ({ currentId, setCurrentId, setSingleData, setCurrentPage }) => {
     let nameStr;
     let yearNum = 0;
     let tagStr = [];
@@ -61,14 +61,15 @@ console.log(imgFile)
             }
             const response = await axios.post(`https://kane-cv-web-service.onrender.com/pieces`, formData)
             console.log(response.data)
+            setCurrentId(response.data.id)
         } catch(err) {
             console.error(err)
         }
         const getData = async () => {
-            const res = await axios.get('https://kane-cv-web-service.onrender.com/pieces')
+            console.log(currentId)
+            const res = await axios.get(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`)
             console.log(res.data)
-            setArtData(res.data)
-            setCurrentId(res.data.id)
+            setSingleData(res.data)
             setCurrentPage('single')
         }
         getData()
@@ -78,28 +79,34 @@ console.log(imgFile)
 
     return (
         <form>
-            
-            <label for="uploadName">Name:</label>
-            <input type="text" id="value1" name="uploadName" maxLength="20" onChange={nameHandler}  required></input>
+            <div className='formRow'>Add New Entry:</div>
+            <div className='formRow'>
+
+            <label htmlFor="uploadName">Name:</label>
+            <input placeholder='name' type="text" id="uploadName" name="uploadName" maxLength="20" onChange={nameHandler}  required></input>
 
                 
-                <label for="uploadYear">Year:</label>
-                <input type="number" id="uploadYear" name="uploadYear" onChange={yearHandler} required></input>
+                <label htmlFor="uploadYear">Year:</label>
+                <input placeholder='Year' type="number" id="uploadYear" name="uploadYear" onChange={yearHandler} required></input>
 
                   
-                    <label for="uploadTags">Tags:</label>
-                    <input type="text" id="uploadTags" name="uploadTags" pattern="^[a-zA-Z]+(,[a-zA-Z]+)*$" title="Enter values separated by commas" onChange={tagHandler} required></input>
+                    <label htmlFor="uploadTags">Tags:</label>
+                <input placeholder='Tags' type="text" id="uploadTags" name="uploadTags" pattern="^[a-zA-Z]+(,[a-zA-Z]+)*$" title="Enter values separated by commas" onChange={tagHandler} required></input>
 
                        
-                        <label for="uploadAbout">About:</label>
-            <input type="text" id="uploadAbout" name="uploadAbout" maxLength="255" onChange={aboutHandler} required></input>
+                        <label htmlFor="uploadAbout">About:</label>
+                <input placeholder='About' type="text" id="uploadAbout" name="uploadAbout" maxLength="255" onChange={aboutHandler} required></input>
+            </div>
+            <div className='formRow'>
+
 
                          
-                            <label for="uploadImage">Image:</label>
+                            <label htmlFor="uploadImage">Image:</label>
             <input type="file" id="uploadImage" name="image" accept=".png, .gif, .jpg, .jpeg" onChange={imgHandler} required></input>
 
               
                                 <input type="button" value="Submit" onClick={handleSubmit}></input>
+            </div>
                                 </form>
 )
 

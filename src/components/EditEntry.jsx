@@ -40,10 +40,7 @@ const EditEntry = ({ currentId, setSingleData, setCurrentPage, setArtData }) => 
         console.log(aboutStr)
     }
 
-    const imgHandler = (e) => {
-        imgFile = e.target.files[0]
-console.log(imgFile)
-    }
+    
 
     const handleSubmit = async () => {
 
@@ -79,7 +76,7 @@ console.log(imgFile)
         
 
         const resetData = async () => {
-            const res = await axios.get(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`)
+            const res = await axios.get(`https://kane-cv-web-service.onrender.com/pieces/`)
             setArtData(res.data)
         }
         
@@ -94,7 +91,8 @@ console.log(imgFile)
     return (
         <>
         <form>
-            
+            <div className='formRow'>Update Image</div>
+                <div className='formRow'>
             <label for="editName">Name:</label>
             <input type="text" id="value1" name="editName" maxLength="20" onChange={nameHandler}  required></input>
 
@@ -109,13 +107,16 @@ console.log(imgFile)
                        
                         <label for="editAbout">About:</label>
             <input type="text" id="editAbout" name="editAbout" maxLength="255" onChange={aboutHandler} required></input>
+            </div>
 
                         
               
+                <div className='formRow'>                    
                                 <input type="button" value="Submit" onClick={handleSubmit}></input>
+            <button onClick={()=>{handleDelete()}}>Delete</button>
+            </div>
         </form>
         
-                    <button onClick={()=>{handleDelete()}}>Delete</button>
         </>
 )
 

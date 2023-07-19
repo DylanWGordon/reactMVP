@@ -130,7 +130,6 @@ app.delete(`/pieces/:id`, async (req, res) => {
 app.patch(`/pieces/:id`,  async (req, res) => {
    
         try {
-            const { art_name, art_year, art_tags, about } = req.body;
             const { id } = req.params;
             if (isNaN(parseInt(id))) {
                 res.status(400).send("Bad Request")

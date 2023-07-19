@@ -12,7 +12,7 @@ function App() {
   // const URL = '/server.js/'
   const URL = 'https://kane-cv-web-service.onrender.com/pieces'
   const [artData, setArtData] = useState([])
-  const [currentPage, setCurrentPage] = useState('')
+  const [currentPage, setCurrentPage] = useState('About')
 
 
 

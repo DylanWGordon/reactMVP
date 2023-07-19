@@ -7,10 +7,9 @@ const NavbarItems = ({ currentPage, setCurrentPage }) => {
     }
 
     return <ul onClick={handleClick} id='navList'>
-        <li className='navListItem'>Portfolio</li>
-        <li className='navListItem'>About Me</li>
-        <li className='navListItem'>Contact</li>
-        <li className='navListItem'>Store</li>
+        <li className='navListItem'><button className='navBtn' style={{ color: '#f3738a', border: '2px', slant: '.5em' }}>Portfolio</button></li>
+        <li className='navListItem'><button className='navBtn' style={{color:'#f3738a', border:'2px', slant:'.5em'}} >About</button></li>
+        <li className='navListItem'><button className='navBtn' style={{color:' #f3738a', border:'2px', slant:'.5em'}}>Contact</button></li>
     </ul>
     
 }
