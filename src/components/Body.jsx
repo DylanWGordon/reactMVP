@@ -16,7 +16,7 @@ const Body = ({ currentPage, setCurrentPage, artData, setArtData }) => {
             <div id='mainBody'>
                 <div id='bodyBody' className="rounded noscroll" >
                     <div className='thumbs'>
-                        <About />
+                        <Contact />
                     </div>
                 </div>
             </div>

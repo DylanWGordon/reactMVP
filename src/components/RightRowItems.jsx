@@ -1,4 +1,4 @@
-
+import Thumbnail from './Thumbnail.jsx'
 
 const RightRowItems = ({ rightArr, setCurrentId, setCurrentPage })=>{
     
@@ -14,6 +14,7 @@ const RightRowItems = ({ rightArr, setCurrentId, setCurrentPage })=>{
                 <div className='thumbnailDiv' key={item.art_id} onClick={()=>handleClick(item)} >
                     <div className='thumbBorder'>
                         <img src={item.image_url} className='imageThumb' />
+                        {/* <Thumbnail item={item} /> */}
                     </div >
                     </div >
                 

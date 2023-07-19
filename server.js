@@ -7,6 +7,10 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import multer from 'multer'
 import fs from 'fs'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fab, faCheckSquare, faCoffee)
 
 const app = express();
 app.use(cors({ origin: '*' }))
@@ -126,31 +130,10 @@ app.delete(`/pieces/:id`, async (req, res) => {
 })
 
 //update one
-app.patch(`/pieces/:id`, upload.single('image'), async (req, res) => {
-    let s3ObjectUrl;
+app.patch(`/pieces/:id`,  async (req, res) => {
+   
         try {
             const { art_name, art_year, art_tags, about } = req.body;
-            if(req.file){
-            const { path, originalname } = req.file;
-            
-            // Read the file content from the local filesystem
-            const fileContent = fs.readFileSync(path);
-            
-            // Upload to S3
-            const s3ObjectKey = s3KeyPrefix + originalname;
-            const s3UploadParams = {
-                Bucket: s3BucketName,
-                Key: s3ObjectKey,
-                Body: fileContent,
-            };
-            
-            await s3.upload(s3UploadParams).promise();
-            
-            // Insert into database
-           s3ObjectUrl = `https://${s3BucketName}.s3.amazonaws.com/${s3ObjectKey}`;
-            
-            
-            }
             const { id } = req.params;
             if (isNaN(parseInt(id))) {
                 res.status(400).send("Bad Request")
@@ -159,7 +142,6 @@ app.patch(`/pieces/:id`, upload.single('image'), async (req, res) => {
                 const keyList = Object.keys(patchData);
                 let sqlString = 'UPDATE portfolio SET '
                 let inputs = ''
-                 patchData.image_url = s3ObjectUrl
                 console.log(patchData)
                 for (let i = 0; i < keyList.length; i++) {
                     if (patchData[keyList[i]] === undefined || patchData[keyList[i]] === '') {

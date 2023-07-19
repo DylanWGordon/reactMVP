@@ -110,10 +110,7 @@ console.log(imgFile)
                         <label for="editAbout">About:</label>
             <input type="text" id="editAbout" name="editAbout" maxLength="255" onChange={aboutHandler} required></input>
 
-                         
-                            <label for="editImage">Image:</label>
-            <input type="file" id="editImage" name="image" accept=".png, .gif, .jpg, .jpeg" onChange={imgHandler} required></input>
-
+                        
               
                                 <input type="button" value="Submit" onClick={handleSubmit}></input>
         </form>
