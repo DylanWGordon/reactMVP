@@ -159,7 +159,7 @@ app.patch(`/pieces/:id`, async (req, res) => {
                         inputs += keyList[i] + ' = ' + patchData[keyList[i]]
                     }
                 } sqlString += inputs;
-                sqlString += ' WHERE art_id = ' + '\'' + id + '\' RETURNING *';
+                sqlString += ' WHERE art_id = ' + '\'' + parseInt(id) + '\' RETURNING *';
                 console.log(sqlString)
                 const result = await pool.query(sqlString)
                 if (result.rowCount === 0) {

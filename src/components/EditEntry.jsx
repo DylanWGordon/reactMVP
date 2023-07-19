@@ -61,7 +61,7 @@ const EditEntry = ({ currentId, setSingleData, setCurrentPage, setArtData }) => 
             for (const key in inputData) {
                 formData.append(key, inputData[key])
             }
-            const response = await axios.patch(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`, formData)
+            const response = await axios.patch(`https://kane-cv-web-service.onrender.com/pieces/${currentId}`, inputData)
             console.log(response.data)
             setSingleData(response.data)
         } catch(err) {
