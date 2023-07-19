@@ -7,10 +7,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import multer from 'multer'
 import fs from 'fs'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
-library.add(fab, faCheckSquare, faCoffee)
 
 const app = express();
 app.use(cors({ origin: '*' }))

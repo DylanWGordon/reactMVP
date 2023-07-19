@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Contact = () => {
     return (
@@ -7,7 +6,6 @@ const Contact = () => {
             <ul id='contactInfo'>
 
                 <li>
-                    <FontAwesomeIcon icon="fab fa-tumblr" />
                     <a href='https://www.tumblr.com/fieryramenart'> Tumblr</a>
                 </li>
 
