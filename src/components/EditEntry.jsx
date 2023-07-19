@@ -54,9 +54,7 @@ const EditEntry = ({ currentId, setSingleData, setCurrentPage, setArtData }) => 
                 inputData.art_tags = tagStr
             } if (aboutStr) {
                 inputData.about = aboutStr
-            } if (imgFile) {
-                inputData.image = imgFile
-            }
+            } 
             console.log(inputData)
             const formData = new FormData();
 

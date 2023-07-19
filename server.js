@@ -127,7 +127,7 @@ app.delete(`/pieces/:id`, async (req, res) => {
 })
 
 //update one
-app.patch(`/pieces/:id`,  async (req, res) => {
+app.patch(`/pieces/:id`, async (req, res) => {
    
         try {
             const { id } = req.params;
@@ -135,6 +135,7 @@ app.patch(`/pieces/:id`,  async (req, res) => {
                 res.status(400).send("Bad Request")
             } else {
                 const patchData = req.body
+                console.log(req.body)
                 const keyList = Object.keys(patchData);
                 let sqlString = 'UPDATE portfolio SET '
                 let inputs = ''
