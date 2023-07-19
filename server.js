@@ -127,52 +127,91 @@ app.delete(`/pieces/:id`, async (req, res) => {
 })
 
 //update one
-app.patch(`/pieces/:id`, async (req, res) => {
+// app.patch(`/pieces/:id`, async (req, res) => {
    
-        try {
-            const { id } = req.params;
-            if (isNaN(parseInt(id))) {
-                res.status(400).send("Bad endpoint")
-            } else {
-                const patchData = req.body
-                console.log(req.body)
-                const keyList = Object.keys(patchData);
-                let sqlString = 'UPDATE portfolio SET '
-                let inputs = ''
-                console.log(patchData)
-                for (let i = 0; i < keyList.length; i++) {
-                    if (patchData[keyList[i]] === undefined || patchData[keyList[i]] === '') {
-                        res.status(400).send('req.body empty');
+//         try {
+//             const { id } = req.params;
+//             if (isNaN(parseInt(id))) {
+//                 res.status(400).send("Bad endpoint")
+//             } else {
+//                 const patchData = req.body
+//                 console.log(req.body)
+//                 const keyList = Object.keys(patchData);
+//                 let sqlString = 'UPDATE portfolio SET '
+//                 let inputs = ''
+//                 console.log(patchData)
+//                 for (let i = 0; i < keyList.length; i++) {
+//                     if (patchData[keyList[i]] === undefined || patchData[keyList[i]] === '') {
+//                         res.status(400).send('req.body empty');
+//                         return;
+//                     }
+//                     if (keyList[i] !== 'art_year') {
+//                         patchData[keyList[i]] = '\'' + patchData[keyList[i]] + '\'';
+//                     } else { //
+//                         if (isNaN(parseInt(patchData[keyList[i]]))) {
+//                             res.status(400).type('text/plain').send('Bad Request: Year value NaN');
+//                             return;
+//                         }
+//                     } if (i < keyList.length - 1) {// for each key found in patchdata,
+//                         //  update the preexisting data's value and separate with commas
+//                         inputs += keyList[i] + ' = ' + patchData[keyList[i]] + ',';
+//                     } else { //last item, no comma
+//                         inputs += keyList[i] + ' = ' + patchData[keyList[i]]
+//                     }
+//                 } sqlString += inputs;
+//                 sqlString += ' WHERE art_id = ' + '\'' + id + '\' RETURNING *';
+
+//                 const result = await pool.query(sqlString)
+//                 if (result.rowCount === 0) {
+//                     res.status(404).send('Not Found')
+//                 } else {
+//                     res.json(result.rows[0])
+//                 }
+//             }
+//         } catch (err) {
+//             console.error(err)
+//             res.status(500).send('Internal Server Error')
+//         }
+// })
+
+app.patch(`/pieces/:id`, async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (isNaN(parseInt(id))) {
+            res.status(400).send("Bad endpoint");
+        } else {
+            const patchData = req.body;
+            const keyList = Object.keys(patchData);
+            let inputs = [];
+            let setValues = [];
+
+            for (const key of keyList) {
+                if (key === 'art_year') {
+                    if (isNaN(parseInt(patchData[key]))) {
+                        res.status(400).type('text/plain').send('Bad Request: Year value NaN');
                         return;
                     }
-                    if (keyList[i] !== 'art_year') {
-                        patchData[keyList[i]] = '\'' + patchData[keyList[i]] + '\'';
-                    } else { //
-                        if (isNaN(parseInt(patchData[keyList[i]]))) {
-                            res.status(400).type('text/plain').send('Bad Request: Year value NaN');
-                            return;
-                        }
-                    } if (i < keyList.length - 1) {// for each key found in patchdata,
-                        //  update the preexisting data's value and separate with commas
-                        inputs += keyList[i] + ' = ' + patchData[keyList[i]] + ',';
-                    } else { //last item, no comma
-                        inputs += keyList[i] + ' = ' + patchData[keyList[i]]
-                    }
-                } sqlString += inputs;
-                sqlString += ' WHERE art_id = ' + '\'' + id + '\' RETURNING *';
-
-                const result = await pool.query(sqlString)
-                if (result.rowCount === 0) {
-                    res.status(404).send('Not Found')
                 } else {
-                    res.json(result.rows[0])
+                    setValues.push(`${key} = $${inputs.length + 1}`);
+                    inputs.push(patchData[key]);
                 }
             }
-        } catch (err) {
-            console.error(err)
-            res.status(500).send('Internal Server Error')
+
+            const sqlString = `UPDATE portfolio SET ${setValues.join(', ')} WHERE art_id = ${id} RETURNING *`;
+
+            const result = await pool.query(sqlString, [...inputs, id]);
+            if (result.rowCount === 0) {
+                res.status(404).send('Not Found');
+            } else {
+                res.json(result.rows[0]);
+            }
         }
-})
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 
 
