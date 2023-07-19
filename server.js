@@ -132,7 +132,7 @@ app.patch(`/pieces/:id`, async (req, res) => {
         try {
             const { id } = req.params;
             if (isNaN(parseInt(id))) {
-                res.status(400).send("Bad Request")
+                res.status(400).send("Bad endpoint")
             } else {
                 const patchData = req.body
                 console.log(req.body)
@@ -142,14 +142,14 @@ app.patch(`/pieces/:id`, async (req, res) => {
                 console.log(patchData)
                 for (let i = 0; i < keyList.length; i++) {
                     if (patchData[keyList[i]] === undefined || patchData[keyList[i]] === '') {
-                        res.status(400).send('Bad request');
+                        res.status(400).send('req.body empty');
                         return;
                     }
                     if (keyList[i] !== 'art_year') {
                         patchData[keyList[i]] = '\'' + patchData[keyList[i]] + '\'';
                     } else { //
                         if (isNaN(parseInt(patchData[keyList[i]]))) {
-                            res.status(400).type('text/plain').send('Bad Request');
+                            res.status(400).type('text/plain').send('Bad Request: Year value NaN');
                             return;
                         }
                     } if (i < keyList.length - 1) {// for each key found in patchdata,
